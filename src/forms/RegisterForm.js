@@ -20,7 +20,7 @@ const FormSchema=Yup.object(
 
 
 
-export default function RegisterForm({ user={id:1, email: "gizmo@yahoo.com", first_name:"Gizmo", last_name:"Taylor", password:"123"}}){
+export default function RegisterForm({ user={id:1, email: "Ku@gmail.com", first_name:"Ku", last_name:"Yang", password:"abc123"}}){
 
     const initialValues={
         email:user?.email ?? '',
