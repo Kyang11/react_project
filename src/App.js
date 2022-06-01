@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import RegisterForm from "./forms/RegisterForm";
+
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RegisterForm/>
+      // <NavBar>
+      //   <Button color="success" onClick={handleAPITest}>Test API Call</Button>
+      //   <Error style={{backgroundColor:'cornflowerblue'}}>This is an error Message</Error>
+      //   <RegisterForm
+
+      //   <LoginForm/>
+      // </NavBar>
   );
 }
 
