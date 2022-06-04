@@ -3,9 +3,6 @@ import RegisterForm from "./forms/RegisterForm";
 import LoginForm from "./forms/LoginForm";
 import NavBar from './components/NavBar'
 
-
-
-
 function App() {
   return (
     
