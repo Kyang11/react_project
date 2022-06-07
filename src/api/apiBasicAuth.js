@@ -1,14 +1,13 @@
-import apiClientNoAuth from './clientNoAuth';
-import apiClientTokenAuth from './clientTokenAuth';
-import apiClientBasicAuth from './clientBasicAuth';
 
-const endpoint = '/login';
+import apiClient from './clientBasicAuth';
+
+const endpoint = '/api/login';
 
 export const getUser= async (email, password, cancelToken)=>{
     let error;
     let user;
 
-    const response = await clientBasicAuth(email, password, cancelToken).get(endpoint);
+    const response = await apiClient(email, password, cancelToken).get(endpoint);
     if (response.ok){
         user = response.data
     }else if (response.status === 401){
@@ -21,19 +20,4 @@ export const getUser= async (email, password, cancelToken)=>{
         user
     }
 
-}
-
-const put = async (token, cancelToken) =>{
-    const response = await apiClientTokenAuth(token, cancelToken).put(endpoint)
-    return response.ok 
-}
-
-const del = async (token, cancelToken) =>{
-    const response = await apiClientTokenAuth(token, cancelToken).del(endpoint)
-    return response.ok 
-}
-
-export default {
-    put,
-    del
 }

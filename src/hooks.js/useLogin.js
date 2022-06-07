@@ -6,12 +6,11 @@ export default function useLogin(loginCreds, setLoginCreds, setError, setUser) {
 //get navigate
     const login = async (cancelToken)=>{
         const response = await getUser(loginCreds.email, loginCreds.password,cancelToken)
-        console.log(response)
+        console.log('login response:', response)
         if(response.user?.token){
             console.log('logged in');
             setUser(response.user);
             setLoginCreds({})
-            // navigate to the home page
         }
         setError(response.error);
     }

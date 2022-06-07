@@ -8,5 +8,4 @@ const clientBasicAuth = (email, password, cancelToken, ) =>create({
     },
     cancelToken
 })
-
 export default clientBasicAuth

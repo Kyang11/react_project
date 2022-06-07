@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
 import Button from '../components/Button';
 import TextField from '@mui/material/TextField';
-import userAPI from '../api/userAPI'
-import {CancelToken} from 'apisauce'
+import DeleteIcon from '@mui/icons-material/Delete';
+import { AppContext } from '../context/AppContext';
+import Error from '../components/Error';
+import usedeleteUser from '../hooks/usedeleteUser';
+import usecreateUser from '../hooks/usecreateUser';
+import useeditUser from '../hooks/useeditUser';
 
 
 // Defining our yup validation
@@ -20,7 +24,16 @@ const FormSchema=Yup.object(
 
 
 
-export default function RegisterForm({ user={id:1, email: "Ku@gmail.com", first_name:"Ku", last_name:"Yang", password:"abc123"}}){
+export default function RegisterForm({
+     user={id:1, email: "Ku@gmail.com", first_name:"Ku", last_name:"Yang", password:"abc123"}}){
+
+        const [newUser, setNewUser] = useState({})
+        const [editUser, setEditUser] = useState({})
+        const [deleteUser, setDeleteUser] = useState({})
+    
+        usecreateUser(newUser)
+        useeditUser(editUser)
+        usedeleteUser(deleteUser)
 
     const initialValues={
         email:user?.email ?? '',
@@ -29,19 +42,18 @@ export default function RegisterForm({ user={id:1, email: "Ku@gmail.com", first_
         password:user?.password ?? '',
     }
     
-    const handleSubmit= async (values, resetForm)=>{
-        if (user){
-            console.log('Editing Profile')
-        }else{
+    const handleSubmit = (values, resetForm) => {
+        if (!user) {
+            setNewUser(values)
             console.log('Registering')
+        } else {
+            setEditUser({ ...values })
+            console.log('Edit Profile')
         }
         console.log(values)
-
-        const source = CancelToken.source();
-       const respose= await userAPI.post(values, source.token)
-       console.log(respose)
         resetForm(initialValues)
     }
+
     
     const formik = useFormik({
         initialValues:initialValues,
@@ -51,8 +63,16 @@ export default function RegisterForm({ user={id:1, email: "Ku@gmail.com", first_
 
     })
 
+    const handleDelete = (e) => {
+        
+        setDeleteUser(user)
+        
+        // console.log('test delete', user)
+    }
+
     return(
         <form onSubmit={formik.handleSubmit}>
+
             <TextField
                 id="email"
                 name="email"
