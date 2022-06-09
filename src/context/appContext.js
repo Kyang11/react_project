@@ -1,4 +1,5 @@
-import {createContext, useState} from "react";
+import {createContext, useReducer, useState} from "react";
+import { bookshopReducer, booklistActions } from "../reducers/bookshopReducer";
 
 export const AppContext = createContext();
 
@@ -12,6 +13,7 @@ const AppContextProvider=({children})=>{
     }
     const [user, _setUser] = useState(getUserFromLS())
     const [alert, setAlert]=useState({});
+    const [readlist, dispatch] = useReducer(bookshopReducer,getUserFromLS()??[])
 
 
     const setUser = (user)=>{
@@ -41,12 +43,23 @@ const AppContextProvider=({children})=>{
         alert,
         setAlert,
         book,
-        setBook
+        addtoList:(book)=>{
+            dispatch({type: booklistActions.addtoList, book})
+        },
+        addBulkTolist:(book)=>{
+            dispatch({type: booklistActions.addBulkTolist, book})
+        },
+        removeFromlist:(book)=>{
+            dispatch({type: booklistActions.removeFromlist, book})
+        },
+
+        removeAllFromlist:(book)=>{
+            dispatch({type: booklistActions.removeAllFromlist, book})
+        },
+        addBulkTolist:()=>{
+            dispatch({type: booklistActions.emptylist})
+        }
     }
-
-    
-
-
 
 
     return (
